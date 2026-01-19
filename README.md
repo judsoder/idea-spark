@@ -12,6 +12,7 @@ python idea_spark.py "your topic here"
 
 - `--tone` - Choose the style of suggestions: `punchy` (default), `professional`, or `playful`
 - `--audience` - Specify a target audience to tailor suggestions
+- `--copy` - Copy output to clipboard (macOS only)
 
 ### Examples
 
@@ -30,11 +31,23 @@ Playful tone with a specific audience:
 python idea_spark.py "cooking" --tone playful --audience "busy parents"
 ```
 
+Copy output to clipboard (macOS):
+```bash
+python idea_spark.py "productivity" --copy
+```
+
 ## Output
 
 Each run generates:
 - 10 short angles (each 12 words or fewer)
 - 3 actionable next steps
+
+## Smoke Test
+
+Verify the tool works correctly:
+```bash
+python idea_spark.py "test" --copy && echo "Smoke test passed"
+```
 
 ## Requirements
 

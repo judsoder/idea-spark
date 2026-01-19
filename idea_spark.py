@@ -4,6 +4,7 @@
 import argparse
 import random
 import hashlib
+import subprocess
 from typing import List, Optional
 
 
@@ -138,6 +139,24 @@ def generate_next_steps(tone: str, audience: Optional[str]) -> List[str]:
     return result
 
 
+def copy_to_clipboard(text: str) -> bool:
+    """Copy text to clipboard using pbcopy on macOS. Returns True on success."""
+    try:
+        process = subprocess.run(
+            ["pbcopy"],
+            input=text.encode("utf-8"),
+            check=True,
+            capture_output=True,
+        )
+        return True
+    except FileNotFoundError:
+        print("\nWarning: pbcopy not found. Clipboard copy is only supported on macOS.")
+        return False
+    except subprocess.CalledProcessError:
+        print("\nWarning: Failed to copy to clipboard.")
+        return False
+
+
 def format_output(topic: str, angles: List[str], steps: List[str], tone: str) -> str:
     """Format the output for terminal display."""
     width = 60
@@ -189,6 +208,11 @@ Examples:
         "--audience",
         help="Target audience to tailor suggestions (free text)",
     )
+    parser.add_argument(
+        "--copy",
+        action="store_true",
+        help="Copy output to clipboard (macOS only)",
+    )
 
     args = parser.parse_args()
 
@@ -198,7 +222,12 @@ Examples:
     angles = generate_angles(args.topic, args.tone, args.audience)
     steps = generate_next_steps(args.tone, args.audience)
 
-    print(format_output(args.topic, angles, steps, args.tone))
+    output = format_output(args.topic, angles, steps, args.tone)
+    print(output)
+
+    if args.copy:
+        if copy_to_clipboard(output):
+            print("\nCopied to clipboard!")
 
 
 if __name__ == "__main__":

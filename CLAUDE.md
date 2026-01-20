@@ -5,15 +5,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Development Commands
 
 ```bash
-# Run the CLI
-python idea_spark.py "topic"
+# Install for development
+pip install -e .
+
+# Run the CLI (after install)
+idea-spark "topic"
 
 # With options
-python idea_spark.py "topic" --tone professional --audience "target audience"
+idea-spark "topic" --tone professional --audience "target audience"
+
+# Or run directly without install
+python -m idea_spark.cli "topic"
 ```
 
-No dependencies to install - uses Python standard library only.
+No external dependencies - uses Python standard library only.
 
 ## Architecture
 
-Single-file CLI app (`idea_spark.py`) using argparse. Template-based generation with tone-specific angle/step templates. Deterministic output via seeded random based on topic+audience hash.
+Python package (`idea_spark/`) with CLI entry point. Template-based generation with tone-specific angle/step templates. Deterministic output via seeded random based on topic+audience hash.
+
+- `idea_spark/__init__.py` - Package init with version
+- `idea_spark/cli.py` - CLI implementation with `main()` entry point
+- `pyproject.toml` - Package config with `idea-spark` console script entry point

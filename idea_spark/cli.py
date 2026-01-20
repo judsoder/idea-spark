@@ -1,9 +1,8 @@
-#!/usr/bin/env python3
-"""idea_spark - Generate creative angles and next steps for any topic."""
+"""Command-line interface for idea_spark."""
 
 import argparse
-import random
 import hashlib
+import random
 import subprocess
 from typing import List, Optional
 
@@ -142,7 +141,7 @@ def generate_next_steps(tone: str, audience: Optional[str]) -> List[str]:
 def copy_to_clipboard(text: str) -> bool:
     """Copy text to clipboard using pbcopy on macOS. Returns True on success."""
     try:
-        process = subprocess.run(
+        subprocess.run(
             ["pbcopy"],
             input=text.encode("utf-8"),
             check=True,
@@ -187,14 +186,15 @@ def format_output(topic: str, angles: List[str], steps: List[str], tone: str) ->
 
 
 def main():
+    """Main entry point for the CLI."""
     parser = argparse.ArgumentParser(
         description="Generate creative angles and next steps for any topic.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python idea_spark.py "remote work"
-  python idea_spark.py "AI ethics" --tone professional
-  python idea_spark.py "cooking" --tone playful --audience "busy parents"
+  idea-spark "remote work"
+  idea-spark "AI ethics" --tone professional
+  idea-spark "cooking" --tone playful --audience "busy parents"
         """,
     )
     parser.add_argument("topic", help="The topic to generate ideas for")

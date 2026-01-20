@@ -3,3 +3,7 @@ __pycache__/
 *.pyc
 .venv/
 .env
+# Packaging/build artifacts
+build/
+dist/
+*.egg-info/

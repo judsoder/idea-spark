@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+idea_spark/__init__.py
+idea_spark/cli.py
+idea_spark.egg-info/PKG-INFO
+idea_spark.egg-info/SOURCES.txt
+idea_spark.egg-info/dependency_links.txt
+idea_spark.egg-info/entry_points.txt
+idea_spark.egg-info/top_level.txt
